@@ -13,6 +13,7 @@ CINCLUDE_FILE += catOS/include
 
 CINCLUDE_FILE += catOS/src/component/cat_stdio
 CINCLUDE_FILE += catOS/src/component/cat_string
+CINCLUDE_FILE += catOS/src/component/cat_shell
 
 CINCLUDE_FILE += catOS/src/core/idle_task
 CINCLUDE_FILE += catOS/src/core/init

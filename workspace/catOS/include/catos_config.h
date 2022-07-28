@@ -18,7 +18,7 @@
 
 
 /** 系统相关 **/
-#define CATOS_SYSTICK_FRQ           (100)   /**< 系统时钟频率，每秒的tick数(周期的倒数)*/
+#define CATOS_SYSTICK_FRQ           (1000)   /**< 系统时钟频率，每秒的tick数(周期的倒数)*/
 #define CATOS_SYSTICK_MS            ((1000 * 1) / CATOS_SYSTICK_FRQ) /**< 每个tick经过的毫秒数*/
 
 /** 任务相关 **/
@@ -34,6 +34,8 @@
     #define CATOS_ENABLE_DEBUG_PRINTF    (1)     /**< 调试打印功能 */
 #endif
 
+/* catshell */
+#define CATOS_ENABLE_CAT_SHELL           (1)     /**< 启用shell */
 
 
 #endif

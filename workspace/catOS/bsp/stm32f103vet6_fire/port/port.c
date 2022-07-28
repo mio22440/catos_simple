@@ -44,6 +44,8 @@ static void cat_set_systick_period(uint32_t ms);
  */
 void cat_port_hardware_init(void)
 {
+    HAL_Init();
+
     /* 系统时钟初始化成72 MHz */
     SystemClock_Config();
 
@@ -58,6 +60,8 @@ void cat_port_hardware_init(void)
 /* stm32的时钟中断处理函数 */
 void SysTick_Handler(void)
 {
+    /* 一些hal库函数需要 */
+    HAL_IncTick();
     /* 调用自己的处理函数 */
     cat_intr_systemtick_handler();
 }

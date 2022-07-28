@@ -138,6 +138,7 @@
 #elif defined(STM32F107xC)
   #include "stm32f107xc.h"
 #else
+  abcdefg
  #error "Please select first the target STM32F1xx device used in your application (in stm32f1xx.h file)"
 #endif
 

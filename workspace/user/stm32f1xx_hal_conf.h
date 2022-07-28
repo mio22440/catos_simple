@@ -74,7 +74,7 @@
 #define HAL_RCC_MODULE_ENABLED
 #define HAL_EXTI_MODULE_ENABLED
 //  #define HAL_RTC_MODULE_ENABLED
-//  #define HAL_SD_MODULE_ENABLED 
+ #define HAL_SD_MODULE_ENABLED 
 //  #define HAL_SMARTCARD_MODULE_ENABLED
 //  #define HAL_SPI_MODULE_ENABLED 
 //  #define HAL_SRAM_MODULE_ENABLED
@@ -82,6 +82,7 @@
  #define HAL_UART_MODULE_ENABLED
 //  #define HAL_USART_MODULE_ENABLED 
 //  #define HAL_WWDG_MODULE_ENABLED 
+#define HAL_MMC_MODULE_ENABLED
 
 /* ########################## Oscillator Values adaptation ####################*/
 /**
@@ -352,7 +353,11 @@
 
 #ifdef HAL_HCD_MODULE_ENABLED
  #include "stm32f1xx_hal_hcd.h"
-#endif /* HAL_HCD_MODULE_ENABLED */   
+#endif /* HAL_HCD_MODULE_ENABLED */  
+
+#ifdef HAL_MMC_MODULE_ENABLED
+#include "stm32f1xx_hal_mmc.h"
+#endif /* HAL_MMC_MODULE_ENABLED */
    
 
 /* Exported macro ------------------------------------------------------------*/

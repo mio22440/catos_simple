@@ -13,6 +13,7 @@
 #include "../../../bsp/interface/port.h"
 
 #include "../../component/cat_stdio/cat_stdio.h"
+#include "../../component/cat_string/cat_string.h"
 
 #include "cat_intr.h"
 
@@ -50,9 +51,15 @@ void cat_intr_systemtick_handler(void)
  * @brief 默认中断服务函数
  * 
  */
-void cat_intr_default_handler(void)
+void cat_intr_default_handler(uint32_t irq)
 {
+    uint8_t buff[40];
+
     CAT_KPRINTF("cat_intr_default_handler triggered\r\n");
+
+    cat_itoh(buff, irq);
+
+    CAT_KPRINTF("irq=%s\r\n", buff);
 
     while(1);
 }

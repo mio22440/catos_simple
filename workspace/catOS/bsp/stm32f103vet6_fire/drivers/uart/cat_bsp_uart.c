@@ -75,7 +75,7 @@ uint32_t cat_bsp_uart_receive(uint8_t *data, uint32_t size)
 {
     uint32_t ret = CAT_EOK;
 
-    ret = HAL_UART_Receive(&UartHandle, data, size, 0x1000);
+    ret = HAL_UART_Receive(&UartHandle, data, size, 0xffffffff);
 
     return ret;
 }
@@ -88,7 +88,7 @@ uint8_t cat_bsp_uart_transmit_byte(uint8_t *ch)
 
 uint8_t cat_bsp_uart_receive_byte(uint8_t *ch)
 {
-    HAL_UART_Receive(&UartHandle, (uint8_t *)ch, 1, 1000);
+    HAL_UART_Receive(&UartHandle, (uint8_t *)ch, 1, 0xffffffff);
     return ch;
 }
 

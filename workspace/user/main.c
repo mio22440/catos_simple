@@ -3,6 +3,7 @@
 
 //#include "app.h"
 
+// #include "sdio_sdcard.h"
 #include "cat_bsp_uart.h"
 #include "bsp_board_led.h"
 
@@ -22,13 +23,14 @@ uint32_t sched_task2_times = 0;
 
 void task1_entry(void *arg)
 {
+
     for(;;)
     {
-      sched_task1_times++;
-		  //board_led_on();
-      cat_sp_task_delay(100);
-		  //board_led_off();
-      cat_sp_task_delay(100);
+        sched_task1_times++;
+	    board_led_on();
+        cat_sp_task_delay(1000);
+	    board_led_off();
+        cat_sp_task_delay(1000);
     }
 }
 
@@ -37,16 +39,15 @@ void task2_entry(void *arg)
     for(;;)
     {
         cat_sp_task_delay(100);
-        CAT_DEBUG_PRINTF("[task2] %d\r\n", catos_systicks);
+        //CAT_DEBUG_PRINTF("[task2] %d\r\n", catos_systicks);
     }
 }
 
 
-
 void main(void)
 {
-	  board_led_init();
-    EXTI_Key_Config();
+	board_led_init();
+    //EXTI_Key_Config();
 
 #if 1
     /* 测试创建任务运行 */
@@ -80,6 +81,8 @@ void main(void)
 
     while(i-- > 0xd);
     board_led_off();
+
 #endif
+
 
 }

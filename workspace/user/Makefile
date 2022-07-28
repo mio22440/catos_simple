@@ -9,6 +9,7 @@ CINCLUDE_FILE += catOS/include
 CINCLUDE_FILE += user
 CINCLUDE_FILE += user/bsp/board_led
 CINCLUDE_FILE += user/bsp/key
+CINCLUDE_FILE += user/bsp/sdio
 
 
 subdir-y += bsp

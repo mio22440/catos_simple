@@ -47,6 +47,8 @@ obj-y += stm32f1xx_hal_usart.o
 obj-y += stm32f1xx_hal_wwdg.o
 obj-y += stm32f1xx_hal.o
 
+obj-y += stm32f1xx_ll_sdmmc.o
+
 
 
 include $(RULE_DIR)/rules.mk

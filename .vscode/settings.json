@@ -21,6 +21,15 @@
         "cat_stdio.h": "c",
         "bsp_usart.h": "c",
         "typeinfo": "c",
-        "key.h": "c"
-    }
+        "key.h": "c",
+        "cat_shell.h": "c",
+        "cat_shell_port.h": "c",
+        "stm32f1xx_hal.h": "c",
+        "stm32f1xx_hal_conf.h": "c",
+        "string.h": "c",
+        "type_traits": "c",
+        "exfuns.h": "c",
+        "ff.h": "c"
+    },
+    "C_Cpp.dimInactiveRegions": false
 }
