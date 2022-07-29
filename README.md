@@ -1,5 +1,5 @@
 # catos_simple
-## develop
+## 分支: feature-device
 
 #### 介绍
 简化版的catos，去掉复杂的部分进行重构
@@ -21,7 +21,7 @@
 4.  编译
 
     $cd catOS/workspace
-    $make p=simple_demo
+    $make p=device
 
     编译完成后的生成文件位于catOS/workspace/output/simple_demo目录下
 

@@ -33,7 +33,31 @@
 
 /*< 获取链表节点的拥有者的结构体首地址**/
 #define CAT_LIST_ENTRY(node, parent, member) \
-    CAT_GET_CONTAINER(node, container, member)
+    CAT_GET_CONTAINER(node, parent, member)
+
+/**
+ * @brief 遍历链表
+ * 
+ * list_ptr     :链表指针
+ * tmp_ptr      :临时指针，循环之前定义，用于访问遍历的链表节点
+ * 
+ * note:注意这里宏中的 list_ptr 一定要加括号，因为该地址变量可能为
+ * 链表变量取地址得到 &list ,若不加括号，则由于取地址运算符 & 的
+ * 优先级低于取成员运算符 -> ,会导致如下表达式<exp1>：
+ * &list->head_node <exp1>
+ * 相当于表达式<exp2>:
+ * &(list->head_node) <exp2>
+ * 而 list 为变量，使用 -> 运算符会报错
+ */
+#define CAT_LIST_FOREACH(list_ptr, tmp_ptr) \
+    cat_node_t *next_node; \
+    tmp_ptr = (list_ptr)->head_node.next_node; \
+    next_node = tmp_ptr->next_node; \
+    for( \
+        tmp_ptr = (list_ptr)->head_node.next_node; \
+        tmp_ptr != &((list_ptr)->head_node); \
+        tmp_ptr = next_node, next_node = tmp_ptr->next_node \
+    )
 
 
 /*< 链表结点结构体**/
