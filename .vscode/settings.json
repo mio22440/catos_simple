@@ -1,26 +1,9 @@
 {
     "files.associations": {
         "*.s": "arm",
-        "catos_types.h": "c",
-        "strategy.h": "c",
-        "catos_config.h": "c",
-        "cat_error.h": "c",
-        "catos_declares.h": "c",
-        "mem_rw.h": "c",
-        "cat_support.h": "c",
-        "cat_sp_task.h": "c",
-        "cat_intr.h": "c",
-        "cat_task.h": "c",
-        "catos.h": "c",
-        "app.h": "c",
         "cat_list.h": "c",
-        "port.h": "c",
-        "stm32f1xx.h": "c",
-        "cat_init.h": "c",
-        "cat_basic_task.h": "c",
-        "cat_stdio.h": "c",
-        "bsp_usart.h": "c",
-        "typeinfo": "c",
-        "key.h": "c"
+        "cat_device.h": "c",
+        "catos_types.h": "c",
+        "catos_config.h": "c"
     }
 }

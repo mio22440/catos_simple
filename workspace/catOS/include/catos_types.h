@@ -45,8 +45,13 @@ typedef uint32_t cat_stack_type_t;       //stack type(the default stack wide of 
 #define CAT_EINVAL              (2)     /**< 非法值 */
 
 /************** struct type*********************/
+/* cat_list.c */
+typedef struct _cat_node_t     cat_node_t;
+typedef struct _cat_list_t     cat_list_t;
 
-
+/* cat_device.c */
+typedef enum _cat_device_type_t         cat_device_type_t;      /**< 设备类型 */
+typedef struct _cat_device_t            cat_device_t;           /**< 设备结构体 */
 
 #endif
 

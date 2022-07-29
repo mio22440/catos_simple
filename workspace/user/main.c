@@ -19,9 +19,13 @@ cat_stack_type_t task2_env[1024];
 uint32_t sched_task1_times = 0;
 uint32_t sched_task2_times = 0;
 
+int do_test_device(void);
 
 void task1_entry(void *arg)
 {
+#if (CATOS_ENABLE_DEVICE_MODEL == 1)
+    do_test_device();
+#endif
     for(;;)
     {
       sched_task1_times++;
@@ -37,7 +41,7 @@ void task2_entry(void *arg)
     for(;;)
     {
         cat_sp_task_delay(100);
-        CAT_DEBUG_PRINTF("[task2] %d\r\n", catos_systicks);
+        // CAT_DEBUG_PRINTF("[task2] %d\r\n", catos_systicks);
     }
 }
 
