@@ -10,10 +10,8 @@ OBJ_OUT_DIR = $(subst $(TOP_DIR),$(RELATIVE_PATH)/$(OBJ_DIR),$(CUR_DIR))
 OBJ_TARGET = $(patsubst %,$(OBJ_OUT_DIR)/%,$(obj-y))
 #要创建的输出目录，并排序
 OBJ_Y_DIR = $(sort $(dir $(OBJ_TARGET)))
-
+#c文件编译包含目录
 CINCLUDE_FILE_FLAG := $(addprefix -I$(RELATIVE_PATH)/,$(CINCLUDE_FILE))
-
-
 
 #设置为伪目标，否则检测到文件或目录存在就不会执行命令
 .PHONY: verify $(subdir-y) $(TARGET)
@@ -22,23 +20,13 @@ all: verify $(OBJ_Y_DIR) $(TARGET)
 
 #在子makefile里声明编译前需要打印的信息，VERIFY_MSG = xxx
 verify:
-#	@echo "$(RELATIVE_PATH)"
 ifdef VERIFY_MSG
 	@echo "verify msg: $(VERIFY_MSG)"
 endif
-#	@echo "CUR_DIR=$(CUR_DIR)"
-#	@echo "TOP_DIR=$(TOP_DIR)"
-#	@echo "RELATIVE_PATH=$(RELATIVE_PATH)"
-#	@echo "OBJ_DIR=$(OBJ_DIR)"
-#	@echo "OBJ_OUT_DIR=$(OBJ_OUT_DIR)"
-#	@echo "TARGET=$(TARGET)"
-#	@echo "subdir-y=$(subdir-y)"
-#	@echo "OBJ_TARGET=$(OBJ_TARGET)"
-#	@echo "OBJ_Y_DIR=$(OBJ_Y_DIR)"
 
 #创建输出目录
 $(OBJ_Y_DIR):
-	@echo "********************************************make$(OBJ_Y_DIR)"
+	@echo "\n-->make$(OBJ_Y_DIR)"
 	@if [ ! -d "$@" ];then $(MK_DIR) $@ ;fi;
 
 
@@ -50,13 +38,30 @@ $(TARGET): $(OBJ_TARGET) $(subdir-y)
 
 #编译文件
 $(OBJ_OUT_DIR)/%.o: $(CUR_DIR)/%.c
+ifeq ($(compile_enable_detail), n)
+	@echo "compile $<"
+	@$(CC) $(CINCLUDE_FILE_FLAG) $(CFLAGS) -o $@ -c $<
+else
 	$(CC) $(CINCLUDE_FILE_FLAG) $(CFLAGS) -o $@ -c $<
+endif
 
 $(OBJ_OUT_DIR)/%.o: $(CUR_DIR)/%.s
+ifeq ($(compile_enable_detail), n)
+	@echo "compile $<"
+	@$(AS) $(ASMINCLUDE_FILE_FLAG) $(ASMFLAGS) -o $@ -c $<
+else
 	$(AS) $(ASMINCLUDE_FILE_FLAG) $(ASMFLAGS) -o $@ -c $<
+endif
+	
 
 $(OBJ_OUT_DIR)/%.o: $(CUR_DIR)/%.S
+ifeq ($(compile_enable_detail), n)
+	@echo "compile $<"
+	@$(AS) $(ASMINCLUDE_FILE_FLAG) $(ASMFLAGS) -o $@ -c $<
+else
 	$(AS) $(ASMINCLUDE_FILE_FLAG) $(ASMFLAGS) -o $@ -c $<
+endif
+	
 
 #更改相对路径，以便目录层级创建
 #############!!note2:添加../必须放在这里，放前面的话生成的obj会再往上一个目录...

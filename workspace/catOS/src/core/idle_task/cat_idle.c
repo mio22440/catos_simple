@@ -32,7 +32,7 @@ void cat_idle_entry(void *arg);
 void cat_idle_task_create(void)
 {
     cat_sp_task_create(
-        "idle_task",
+        (const uint8_t *)"idle_task",
         &idle_task,
         cat_idle_entry,
         NULL,

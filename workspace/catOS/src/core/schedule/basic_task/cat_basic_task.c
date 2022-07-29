@@ -57,7 +57,7 @@ void cat_task_init(
     task->slice = CATOS_MAX_SLICE;
     task->suspend_cnt = 0;
 
-    task->task_name = task_name;
+    task->task_name = (uint8_t *)task_name;
     task->sched_times = 0;
 
     task->sched_strategy = sched_strategy;

@@ -53,7 +53,7 @@ int32_t cat_strcmp(const uint8_t *str1, const uint8_t *str2)
     return ret;
 }
 
-int32_t *cat_strcpy(uint8_t *dest, const uint8_t *src, uint32_t dest_len)
+int32_t cat_strcpy(uint8_t *dest, const uint8_t *src, uint32_t dest_len)
 {
     //uint8_t *p = src;
     int32_t ret = CAT_EOK;
@@ -68,7 +68,7 @@ int32_t *cat_strcpy(uint8_t *dest, const uint8_t *src, uint32_t dest_len)
         dest[i] = src[i];
     }
 
-    return 0;
+    return ret;
 }
 
 int32_t cat_atoi(int32_t *dest, const uint8_t *src)

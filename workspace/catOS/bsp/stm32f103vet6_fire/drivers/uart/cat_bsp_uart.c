@@ -89,7 +89,7 @@ uint8_t cat_bsp_uart_transmit_byte(uint8_t *ch)
 uint8_t cat_bsp_uart_receive_byte(uint8_t *ch)
 {
     HAL_UART_Receive(&UartHandle, (uint8_t *)ch, 1, 1000);
-    return ch;
+    return *ch;
 }
 
 //会在HAL_UART_Init中被调用
