@@ -17,6 +17,8 @@
 
 #include "cat_init.h"
 
+extern void main(void);
+
 /**
  * @brief 系统初始化
  */

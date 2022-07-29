@@ -25,14 +25,14 @@ typedef enum
 } cat_error_type_t;
 
 /************* local vars **************/
-static uint8_t *_cat_error_msg[] = 
+static const uint8_t *_cat_error_msg[] = 
 {
-    "[cat_stdio] no match error type !!\r\n",
-    "[cat_stdio:cat_print]type not support !!\r\n",
+    (const uint8_t *)"[cat_stdio] no match error type !!\r\n",
+    (const uint8_t *)"[cat_stdio:cat_print]type not support !!\r\n",
 };
 
 /************* static **************/
-static int32_t _cat_print_string(uint8_t *str);
+static int32_t _cat_print_string(const uint8_t *str);
 static int32_t _cat_print_error(cat_error_type_t type);
 static int32_t _cat_print_int(int32_t num, int32_t width);
 
@@ -40,7 +40,7 @@ static int32_t _cat_scan_string(uint8_t *str_dest, uint32_t buf_len);
 static int32_t _cat_scan_int(int32_t *dest);
 
 
-static int32_t _cat_print_string(uint8_t *str)
+static int32_t _cat_print_string(const uint8_t *str)
 {
     int32_t ret = CAT_EOK;
 
@@ -85,7 +85,6 @@ static int32_t _cat_print_error(cat_error_type_t type)
 static int32_t _cat_print_int(int32_t num, int32_t width)
 {
     int32_t ret = CAT_EOK;
-    uint32_t tmp = 0;
     /* uint32_t max val = 4294967295 */
     uint8_t buf[CAT_INT_LONG] = {0};
     uint8_t i = 0;
@@ -210,7 +209,7 @@ int32_t cat_scanf(const uint8_t *format, ...)
     va_start(ap, format);
 
     /* 挨个处理 */
-    p = format;
+    p = (uint8_t *)format;
     while('\0' != *p)
     {
         if('%' != *p)
@@ -277,7 +276,7 @@ int32_t cat_printf(const uint8_t *format, ...)
     va_start(ap, format);
 
     /* 挨个处理 */
-    p = format;
+    p = (uint8_t *)format;
     while('\0' != *p)
     {
         if('%' != *p)

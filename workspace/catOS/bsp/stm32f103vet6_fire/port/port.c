@@ -62,19 +62,6 @@ void SysTick_Handler(void)
     cat_intr_systemtick_handler();
 }
 
-/* 初始化系统时钟中断(分频器) */
-void cat_set_systick_period(uint32_t ms)
-{
-    SysTick->LOAD = ms * SystemCoreClock / 1000;                    /* 重载计数器值 */
-    NVIC_SetPriority(SysTick_IRQn, (1 << __NVIC_PRIO_BITS) - 1);
-    SysTick->VAL = 0;
-
-    /* 设定systick控制寄存器 */
-    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk |/* 设定为内核时钟FCLK */
-                    SysTick_CTRL_TICKINT_Msk |/* 设定为systick计数器倒数到0时触发中断 */
-                    ~SysTick_CTRL_ENABLE_Msk;/* 关闭定时器中断，若创建任务则在catos_start_sched()中开启该中断 */
-}
-
 /* 开始调度 */
 void catos_start_sched(void)
 {
@@ -88,28 +75,6 @@ void catos_start_sched(void)
 
     MEM8(NVIC_SYSPRI2)      = NVIC_PENDSV_PRI;
     MEM32(NVIC_INT_CTRL)    = NVIC_PENDSVSET;
-}
-
-/* 触发pendsv中断进行任务切换，pendsv中断处理函数定义在汇编port.s中 */
-void cat_context_switch(void)
-{
-    static uint32_t cat_context_switch_times = 0;
-    cat_context_switch_times++;
-    MEM32(NVIC_INT_CTRL)    = NVIC_PENDSVSET;/* pendsv的优先级在开始第一个任务时已经设置 */
-}
-
-/* 关中断方式进入临界区 */
-uint32_t cat_enter_critical(void)
-{
-    uint32_t primask = __get_PRIMASK();/* 读取中断配置 */
-    __disable_irq();
-    return primask;
-}
-
-/* 开中断方式出临界区 */
-void cat_exit_critical(uint32_t status)
-{
-    __set_PRIMASK(status);
 }
 
 /* PRIVATE FUNCS DEF START */
@@ -129,7 +94,7 @@ void cat_exit_critical(uint32_t status)
   * @param  None
   * @retval None
   */
-void SystemClock_Config(void)
+static void SystemClock_Config(void)
 {
   RCC_ClkInitTypeDef clkinitstruct = {0};
   RCC_OscInitTypeDef oscinitstruct = {0};
@@ -159,6 +124,23 @@ void SystemClock_Config(void)
     /* Initialization Error */
     while(1); 
   }
+}
+
+/**
+ * @brief 初始化系统时钟中断(分频器)
+ * 
+ * @param ms 周期(ms)
+ */
+static void cat_set_systick_period(uint32_t ms)
+{
+    SysTick->LOAD = ms * SystemCoreClock / 1000;                    /* 重载计数器值 */
+    NVIC_SetPriority(SysTick_IRQn, (1 << __NVIC_PRIO_BITS) - 1);
+    SysTick->VAL = 0;
+
+    /* 设定systick控制寄存器 */
+    SysTick->CTRL = SysTick_CTRL_CLKSOURCE_Msk |/* 设定为内核时钟FCLK */
+                    SysTick_CTRL_TICKINT_Msk |/* 设定为systick计数器倒数到0时触发中断 */
+                    ~SysTick_CTRL_ENABLE_Msk;/* 关闭定时器中断，若创建任务则在catos_start_sched()中开启该中断 */
 }
 /* PRIVATE FUNCS DEF END */
 

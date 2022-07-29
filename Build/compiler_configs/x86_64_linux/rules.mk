@@ -22,7 +22,6 @@ all: verify $(OBJ_Y_DIR) $(TARGET)
 
 #在子makefile里声明编译前需要打印的信息，VERIFY_MSG = xxx
 verify:
-#	@echo "$(RELATIVE_PATH)"
 ifdef VERIFY_MSG
 	@echo "verify msg: $(VERIFY_MSG)"
 endif

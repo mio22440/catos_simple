@@ -43,7 +43,7 @@ void task2_entry(void *arg)
 
 
 
-void main(void)
+int main(void)
 {
 	  board_led_init();
     EXTI_Key_Config();
@@ -51,7 +51,7 @@ void main(void)
 #if 1
     /* 测试创建任务运行 */
     cat_sp_task_create(
-      "task1_task",
+      (const uint8_t *)"task1_task",
       &task1,
       task1_entry,
       NULL,
@@ -61,7 +61,7 @@ void main(void)
     );
 
     cat_sp_task_create(
-      "task2_task",
+      (const uint8_t *)"task2_task",
       &task2,
       task2_entry,
       NULL,
@@ -82,4 +82,5 @@ void main(void)
     board_led_off();
 #endif
 
+    return 0;
 }

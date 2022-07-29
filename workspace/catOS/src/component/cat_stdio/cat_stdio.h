@@ -37,15 +37,15 @@
     /* 系统输入输出宏 */
     #define CAT_KPRINTF(_fmt, ...) \
         do{ \
-            cat_printf("[%d] ", catos_systicks); \
-            cat_printf(_fmt, ##__VA_ARGS__); \
+            cat_printf((const uint8_t *)"[%d] ", catos_systicks); \
+            cat_printf((const uint8_t *)_fmt, ##__VA_ARGS__); \
         }while(0)
 
     #define CAT_SYS_PRINTF(_fmt, ...) \
-        cat_printf(_fmt, ##__VA_ARGS__)
+        cat_printf((const uint8_t *)_fmt, ##__VA_ARGS__)
 
     #define CAT_SYS_SCANF(_fmt, ...) \
-        cat_scanf(_fmt, ##__VA_ARGS__)
+        cat_scanf((const uint8_t *)_fmt, ##__VA_ARGS__)
 
     #define CAT_SYS_PUTCHAR(_ch) \
         cat_putchar(_ch)
@@ -56,7 +56,7 @@
     /* 调试输出宏 */    
     #if( CATOS_ENABLE_DEBUG_PRINTF == 1)
         #define CAT_DEBUG_PRINTF(_fmt, ...) \
-            cat_printf(_fmt, ##__VA_ARGS__)
+            cat_printf((const uint8_t *)_fmt, ##__VA_ARGS__)
     #else //#if( DEBUG_PRINT_ENABLE == 1)
         #define CAT_DEBUG_PRINTF(_fmt, ...)
     #endif //#if( DEBUG_PRINT_ENABLE == 1)

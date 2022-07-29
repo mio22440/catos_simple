@@ -31,7 +31,7 @@ int32_t cat_strcmp(const uint8_t *str1, const uint8_t *str2);
  * @param src 
  * @return int32_t 0:成功，else:失败
  */
-int32_t *cat_strcpy(uint8_t *dest, const uint8_t *src, uint32_t dest_len);
+int32_t cat_strcpy(uint8_t *dest, const uint8_t *src, uint32_t dest_len);
 
 
 /**

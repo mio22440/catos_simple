@@ -25,6 +25,16 @@ OBJ_DIR = $(OUT_PROJECT)/obj
 LIB_DIR = $(OUT_PROJECT)/lib
 BIN_DIR = $(OUT_PROJECT)/bin
 
+#字体颜色
+TEXT_COLOR_RED   		= \033[1;31m
+TEXT_COLOR_GREEN 		= \033[1;32m
+TEXT_COLOR_YELLOW 		= \033[1;33m
+TEXT_COLOR_BLUE     	= \033[1;34m
+TEXT_COLOR_PURPLE   	= \033[1;35m
+TEXT_COLOR_DARKGREEN 	= \033[1;36m
+TEXT_COLOR_WHITE	 	= \033[1;37m
+TEXT_COLOR_END   		= \033[0m
+
 #检验输入的project是否有相应的配置文件
 ifeq ($(PROJECT_DIR)/$(PROJECT)/$(PROJECT).config,$(wildcard $(PROJECT_DIR)/$(PROJECT)/$(PROJECT).config))
 
@@ -66,14 +76,15 @@ verify:
 	
 
 $(OUT_ELF): $(BIN_DIR) $(SRC_DIR)
-	@echo "<----------------------build done"
-	@echo "start link---------------------->"
-	$(LD) $(CLINK_FLAGS) -o $@ $(LIST_MAP_FILE_FLAG) $(shell find $(OUT_DIR)/$(PROJECT) -name *.o)
+	@echo "$(TEXT_COLOR_WHITE)<----------------------build done$(TEXT_COLOR_END)"
+	@echo "$(TEXT_COLOR_WHITE)start link---------------------->$(TEXT_COLOR_END)"
+	@$(LD) $(CLINK_FLAGS) -o $@ $(LIST_MAP_FILE_FLAG) $(shell find $(OUT_DIR)/$(PROJECT) -name *.o)
 	$(CP) -O binary -S $@ $(OUT_BIN)
 	$(CP) -O ihex   -S $@ $(OUT_HEX)
-	@echo "<-----------------------link done"
+	@echo "$(TEXT_COLOR_WHITE)<-----------------------link done$(TEXT_COLOR_END)"
+	@$(SZ) $@
 	@echo "source git info: commit at $(COMMIT_TIME) by $(GIT_AUTHOR)@$(GIT_EMAIL)"
-	@echo "build \033[1;32m$(PROJECT)\033[0m done, start time: $(start_time) end time: $(shell date "+%Y-%m-%d %H:%M:%S")"
+	@echo "build $(TEXT_COLOR_GREEN)$(PROJECT)$(TEXT_COLOR_END), start time: $(start_time) end time: $(shell date "+%Y-%m-%d %H:%M:%S")"
 
 $(BIN_DIR):
 	@$(MK_DIR) $(OUT_DIR)/$(PROJECT)/bin
@@ -81,7 +92,7 @@ $(BIN_DIR):
 	@$(MK_DIR) $(OUT_DIR)/$(PROJECT)/lib
 
 $(SRC_DIR):
-	@echo "start build project: $(PROJECT)------->"
+	@echo "$(TEXT_COLOR_WHITE)start build project: $(PROJECT)------->$(TEXT_COLOR_END)"
 	@$(MAKE) --no-print-directory -C $@ -f $(SRC_DIR)/Makefile_content
 #	@$(MAKE) -C $@ -f $(SRC_DIR)/Makefile_content
 
