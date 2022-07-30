@@ -53,9 +53,5 @@ uint32_t cat_enter_critical(void);
  */
 void cat_exit_critical(uint32_t status);
 
-#if (CATOS_USE_SW_RESET == 1)
-void cat_port_reset_chip(void);
-#endif
-
 
 #endif

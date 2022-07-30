@@ -22,11 +22,11 @@ void task1_entry(void *arg)
 {
     for(;;)
     {
-      sched_task1_times++;
-		  //board_led_on();
-      cat_sp_task_delay(100);
-		  //board_led_off();
-      cat_sp_task_delay(100);
+        sched_task1_times++;
+	    board_led_on();
+        cat_sp_task_delay(100);
+		board_led_off();
+        cat_sp_task_delay(100);
     }
 }
 
@@ -35,7 +35,7 @@ void task2_entry(void *arg)
     for(;;)
     {
         cat_sp_task_delay(100);
-        CAT_DEBUG_PRINTF("[task2] %d\r\n", catos_systicks);
+        // CAT_DEBUG_PRINTF("[task2] %d\r\n", catos_systicks);
     }
 }
 

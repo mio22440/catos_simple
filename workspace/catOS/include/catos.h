@@ -12,6 +12,8 @@
 #ifndef CATOS_H
 #define CATOS_H
 
+#include "../bsp/interface/port.h"
+
 #include "../src/core/init/cat_init.h"
 #include "../src/core/interrupt/cat_intr.h"
 #include "../src/core/schedule/cat_task.h"

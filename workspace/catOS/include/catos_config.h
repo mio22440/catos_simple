@@ -30,13 +30,12 @@
 /** component **/
 /* cat_device */
 #define CATOS_ENABLE_DEVICE_MODEL           1     /**< 使用设备驱动框架 */
-
+/* cat_shell */
+#define CATOS_ENABLE_CAT_SHELL              1     /**< 使用shell */
 /* cat_stdio */
 #define CATOS_ENABLE_SYS_PRINTF             1     /**< 系统输出 */
 #if (CATOS_ENABLE_SYS_PRINTF == 1)
     #define CATOS_ENABLE_DEBUG_PRINTF       1     /**< 调试打印功能 */
-#endif
+#endif /* #if (CATOS_ENABLE_SYS_PRINTF == 1) */
 
-
-
-#endif
+#endif/* #ifndef CATOS_CONFIG_H */

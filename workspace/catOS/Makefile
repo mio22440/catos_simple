@@ -12,6 +12,7 @@ endif
 CINCLUDE_FILE += catOS/include
 
 CINCLUDE_FILE += catOS/src/component/cat_device
+CINCLUDE_FILE += catOS/src/component/cat_shell
 CINCLUDE_FILE += catOS/src/component/cat_stdio
 CINCLUDE_FILE += catOS/src/component/cat_string
 

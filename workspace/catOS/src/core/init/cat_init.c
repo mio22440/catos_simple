@@ -10,11 +10,15 @@
  */
 
 #include "port.h"
+
+#include "cat_device.h"
+#include "cat_shell.h"
 #include "cat_stdio.h"
+
 #include "cat_task.h"
 #include "cat_intr.h"
 #include "cat_idle.h"
-#include "cat_device.h"
+
 
 #include "uart/cat_drv_uart.h"
 
@@ -47,6 +51,9 @@ void catos_init(void)
 
     /* 创建空闲任务 */
     cat_idle_task_create();
+
+    /* 创建shell任务 */
+    cat_shell_task_create();
 
     /* 禁止调度，若用户调用catos_start_sched()，则在其中打开调度锁 */
     cat_sp_task_sched_disable();
