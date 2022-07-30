@@ -14,6 +14,9 @@
 #include "cat_task.h"
 #include "cat_intr.h"
 #include "cat_idle.h"
+#include "cat_device.h"
+
+#include "uart/cat_drv_uart.h"
 
 #include "cat_init.h"
 
@@ -26,6 +29,15 @@ void catos_init(void)
 {
     /* 板级硬件初始化 */
     cat_port_hardware_init();
+
+    /* 初始化设备框架 */
+    cat_device_module_init();
+
+    /* 注册串口 */
+    cat_drv_uart_register();
+
+    /* 设置标准输入输出使用的串口 */
+    cat_stdio_set_device((uint8_t *)"uart1");
     
     /* 固定优先级调度初始化 */
     cat_sp_task_scheduler_init();

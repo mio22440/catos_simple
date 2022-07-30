@@ -1,4 +1,13 @@
-
+/**
+ * @file cat_device.c
+ * @author mio_wen (648137125@qq.com)
+ * @brief 设备驱动框架
+ * @version 0.1
+ * @date 2022-07-30
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include "cat_device.h"
 #include "cat_string.h"
 #include "cat_error.h"
@@ -382,9 +391,9 @@ uint8_t cat_device_close(cat_device_t *dev)
 
     return ret;
 }
-uint8_t cat_device_read(cat_device_t *dev, int32_t pos, void *buffer, uint32_t size)
+uint32_t cat_device_read(cat_device_t *dev, int32_t pos, void *buffer, uint32_t size)
 {
-    uint8_t ret = 0;
+    uint32_t ret = 0;
 
     if(
         (NULL == dev) ||
@@ -403,9 +412,9 @@ uint8_t cat_device_read(cat_device_t *dev, int32_t pos, void *buffer, uint32_t s
 
     return ret;
 }
-uint8_t cat_device_write(cat_device_t *dev, int32_t pos, const void *buffer, uint32_t size)
+uint32_t cat_device_write(cat_device_t *dev, int32_t pos, const void *buffer, uint32_t size)
 {
-    uint8_t ret = CAT_EOK;
+    uint32_t ret = CAT_EOK;
 
     if(
         (NULL == dev) ||

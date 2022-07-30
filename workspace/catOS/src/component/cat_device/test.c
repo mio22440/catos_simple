@@ -158,7 +158,7 @@ uint8_t test_ctrl(cat_device_t *dev, int cmd, void *args)
     return CAT_EOK;
 }
 
-cat_device_t uart0_dev = {
+cat_device_t test_uart0_dev = {
     .type        = CAT_DEVICE_TYPE_CHAR,
     .init        = test_init,
     .open        = test_open,
@@ -166,7 +166,7 @@ cat_device_t uart0_dev = {
     .write       = test_write,
     .ctrl        = test_ctrl,
 };
-cat_device_t uart1_dev = {
+cat_device_t test_uart1_dev = {
     .type        = CAT_DEVICE_TYPE_CHAR,
     .init        = test_init,
     .open        = test_open,
@@ -174,7 +174,7 @@ cat_device_t uart1_dev = {
     .write       = test_write,
     .ctrl        = test_ctrl,
 };
-cat_device_t iic0_dev = {
+cat_device_t test_iic0_dev = {
     .type        = CAT_DEVICE_TYPE_IIC,
     .init        = test_init,
     .open        = test_open,
@@ -182,7 +182,7 @@ cat_device_t iic0_dev = {
     .write       = test_write,
     .ctrl        = test_ctrl,
 };
-cat_device_t screen0_dev = {
+cat_device_t test_screen0_dev = {
     .type        = CAT_DEVICE_TYPE_GRAPHIC,
     .init        = test_init,
     .open        = test_open,
@@ -195,10 +195,10 @@ void test_device_register(void)
 {
     CAT_KPRINTF("\n*** 1 test device_register ***\r\n");
     int err = 0;
-    err += cat_device_register(&uart0_dev,   (const uint8_t *)"uart0",   CAT_DEVICE_MODE_RDWR   | CAT_DEVICE_MODE_INT_RX);
-    err += cat_device_register(&uart1_dev,   (const uint8_t *)"uart1",   CAT_DEVICE_MODE_RDWR   | CAT_DEVICE_MODE_INT_RX);
-    err += cat_device_register(&iic0_dev,    (const uint8_t *)"iic0",    CAT_DEVICE_MODE_RDWR);
-    err += cat_device_register(&screen0_dev, (const uint8_t *)"screen0", CAT_DEVICE_MODE_WRONLY | CAT_DEVICE_MODE_DMA_TX);
+    err += cat_device_register(&test_uart0_dev,   (const uint8_t *)"uart0",   CAT_DEVICE_MODE_RDWR   | CAT_DEVICE_MODE_INT_RX);
+    err += cat_device_register(&test_uart1_dev,   (const uint8_t *)"uart1",   CAT_DEVICE_MODE_RDWR   | CAT_DEVICE_MODE_INT_RX);
+    err += cat_device_register(&test_iic0_dev,    (const uint8_t *)"iic0",    CAT_DEVICE_MODE_RDWR);
+    err += cat_device_register(&test_screen0_dev, (const uint8_t *)"screen0", CAT_DEVICE_MODE_WRONLY | CAT_DEVICE_MODE_DMA_TX);
     CAT_KPRINTF("err = %d\r\n", err);
 
     list_device();
@@ -207,61 +207,61 @@ void test_device_register(void)
 void test_device_open_close(void)
 {
     CAT_KPRINTF("\n*** 2 test device_open_close ***\r\n");
-    CAT_KPRINTF("-->open uart0_dev twice with 0x103\r\n");
-    CAT_KPRINTF("-->open iic0_dev with 0x003\r\n");
-    cat_device_open(&uart0_dev, CAT_DEVICE_MODE_RDWR   | CAT_DEVICE_MODE_INT_RX);
-    cat_device_open(&uart0_dev, CAT_DEVICE_MODE_RDWR   | CAT_DEVICE_MODE_INT_RX);
-    cat_device_open(&iic0_dev, CAT_DEVICE_MODE_RDWR);
+    CAT_KPRINTF("-->open test_uart0_dev twice with 0x103\r\n");
+    CAT_KPRINTF("-->open test_iic0_dev with 0x003\r\n");
+    cat_device_open(&test_uart0_dev, CAT_DEVICE_MODE_RDWR   | CAT_DEVICE_MODE_INT_RX);
+    cat_device_open(&test_uart0_dev, CAT_DEVICE_MODE_RDWR   | CAT_DEVICE_MODE_INT_RX);
+    cat_device_open(&test_iic0_dev, CAT_DEVICE_MODE_RDWR);
     list_device();
 
     CAT_KPRINTF("<--close all\r\n");
-    cat_device_close(&uart0_dev);
-    cat_device_close(&uart0_dev);
-    cat_device_close(&iic0_dev);
+    cat_device_close(&test_uart0_dev);
+    cat_device_close(&test_uart0_dev);
+    cat_device_close(&test_iic0_dev);
     list_device();
 }
 
 void test_device_read_write(void)
 {
     CAT_KPRINTF("\n*** 3 test device_read_write ***\r\n");
-    CAT_KPRINTF("-->open uart0_dev with 0x103\r\n");
-    CAT_KPRINTF("-->open iic0_dev with 0x003\r\n");
-    cat_device_open(&uart0_dev, CAT_DEVICE_MODE_RDWR   | CAT_DEVICE_MODE_INT_RX);
-    cat_device_open(&iic0_dev, CAT_DEVICE_MODE_RDWR);
+    CAT_KPRINTF("-->open test_uart0_dev with 0x103\r\n");
+    CAT_KPRINTF("-->open test_iic0_dev with 0x003\r\n");
+    cat_device_open(&test_uart0_dev, CAT_DEVICE_MODE_RDWR   | CAT_DEVICE_MODE_INT_RX);
+    cat_device_open(&test_iic0_dev, CAT_DEVICE_MODE_RDWR);
     list_device();
 
     CAT_KPRINTF("-->read device\r\n");
-    cat_device_read(&uart0_dev, 0, NULL, 0);
-    cat_device_read(&iic0_dev, 0, NULL, 0);
+    cat_device_read(&test_uart0_dev, 0, NULL, 0);
+    cat_device_read(&test_iic0_dev, 0, NULL, 0);
 
     CAT_KPRINTF("-->write device\r\n");
-    cat_device_write(&uart0_dev, 0, NULL, 0);
-    cat_device_write(&iic0_dev, 0, NULL, 0);
+    cat_device_write(&test_uart0_dev, 0, NULL, 0);
+    cat_device_write(&test_iic0_dev, 0, NULL, 0);
 
     CAT_KPRINTF("<--close all\r\n");
-    cat_device_close(&uart0_dev);
-    cat_device_close(&iic0_dev);
+    cat_device_close(&test_uart0_dev);
+    cat_device_close(&test_iic0_dev);
     list_device();
 }
 
 void test_device_ctrl(void)
 {
     CAT_KPRINTF("\n*** 4 test device_open_close ***\r\n");
-    CAT_KPRINTF("-->open uart0_dev with 0x103\r\n");
-    CAT_KPRINTF("-->open iic0_dev with 0x003\r\n");
-    cat_device_open(&uart0_dev, CAT_DEVICE_MODE_RDWR   | CAT_DEVICE_MODE_INT_RX);
-    cat_device_open(&iic0_dev, CAT_DEVICE_MODE_RDWR);
+    CAT_KPRINTF("-->open test_uart0_dev with 0x103\r\n");
+    CAT_KPRINTF("-->open test_iic0_dev with 0x003\r\n");
+    cat_device_open(&test_uart0_dev, CAT_DEVICE_MODE_RDWR   | CAT_DEVICE_MODE_INT_RX);
+    cat_device_open(&test_iic0_dev, CAT_DEVICE_MODE_RDWR);
     list_device();
 
     int a = 5, b = 6;
-    CAT_KPRINTF("-->ctrl uart0_dev with: cmd=0x2, arg=&(int a=5)\r\n");
-    cat_device_ctrl(&uart0_dev, 0x2, (void*)&a);
-    CAT_KPRINTF("-->ctrl uart0_dev with: cmd=0x4, arg=&(int b=6)\r\n");
-    cat_device_ctrl(&iic0_dev, 0x4, (void*)&b);
+    CAT_KPRINTF("-->ctrl test_uart0_dev with: cmd=0x2, arg=&(int a=5)\r\n");
+    cat_device_ctrl(&test_uart0_dev, 0x2, (void*)&a);
+    CAT_KPRINTF("-->ctrl test_uart0_dev with: cmd=0x4, arg=&(int b=6)\r\n");
+    cat_device_ctrl(&test_iic0_dev, 0x4, (void*)&b);
 
     CAT_KPRINTF("<--close all\r\n");
-    cat_device_close(&uart0_dev);
-    cat_device_close(&iic0_dev);
+    cat_device_close(&test_uart0_dev);
+    cat_device_close(&test_iic0_dev);
     list_device();
 }
 
@@ -270,10 +270,10 @@ void test_device_unregister(void)
     CAT_KPRINTF("\n*** test device_unregister ***\r\n");
     int err = 0;
     CAT_KPRINTF("-->unregister all\r\n");
-    err += cat_device_unregister(&uart0_dev);
-    err += cat_device_unregister(&uart1_dev);
-    err += cat_device_unregister(&iic0_dev);
-    err += cat_device_unregister(&screen0_dev);
+    err += cat_device_unregister(&test_uart0_dev);
+    err += cat_device_unregister(&test_uart1_dev);
+    err += cat_device_unregister(&test_iic0_dev);
+    err += cat_device_unregister(&test_screen0_dev);
     CAT_KPRINTF("err = %d\r\n", err);
 
     list_device();

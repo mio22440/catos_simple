@@ -13,11 +13,10 @@
  */
 
 #include "cat_task.h"
-#include "cat_bsp_uart.h"
 #include "cat_intr.h"
+#include "port.h"
 
-#include "../../interface/port.h"
-
+#include "../drivers/uart/cat_drv_uart.h"
 
 //#define STM32F103xE
 #include "../Libraries/CMSIS/Device/ST/STM32F1xx/Include/stm32f1xx.h"
@@ -50,14 +49,14 @@ void cat_port_hardware_init(void)
     /* 设置系统时钟中断频率为100Hz(每秒100次) */
     cat_set_systick_period(CATOS_SYSTICK_MS);
 
-    /* 初始化串口 */
-    cat_bsp_uart_init();
-
+    // /* 初始化串口 */
+    // cat_bsp_uart_init();
 }
 
 /* stm32的时钟中断处理函数 */
 void SysTick_Handler(void)
 {
+    HAL_IncTick();
     /* 调用自己的处理函数 */
     cat_intr_systemtick_handler();
 }

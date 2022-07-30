@@ -10,7 +10,6 @@
  */
 
 #include "cat_stdio.h"
-#include "uart/cat_bsp_uart.h"
 #include "cat_string.h"
 
 /************* macros and defines **************/
@@ -176,19 +175,42 @@ static int32_t _cat_scan_int(int32_t *dest)
 }
 
 /************* func **************/
+#include "cat_device.h"
+#include "uart/cat_drv_uart.h"
+#include "cat_error.h"
+
+static cat_device_t *_stdio_dev = NULL;
+
+uint8_t cat_stdio_set_device(const uint8_t *name)
+{
+    uint8_t ret = CAT_EOK;
+
+    _stdio_dev = cat_device_get(name);
+    CAT_ASSERT(NULL != _stdio_dev);
+
+    return ret;
+}
 
 uint8_t cat_getchar(void)
 {
-    uint8_t ret = CAT_EOK;
+    uint8_t ret = 0;
     
+#if 0
     cat_bsp_uart_receive_byte((uint8_t *)&ret);
+#else
+    cat_device_read(_stdio_dev, 0, &ret, 1);
+#endif
 
     return ret;
 }
 
 uint8_t cat_putchar(uint8_t ch)
 {
+#if 0
     cat_bsp_uart_transmit_byte((uint8_t *)&ch);
+#else
+    cat_device_write(_stdio_dev, 0, &ch, 1);
+#endif
 
     return ch;
 }

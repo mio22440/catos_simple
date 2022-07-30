@@ -53,6 +53,7 @@ typedef struct _cat_list_t     cat_list_t;
 typedef enum _cat_device_type_t         cat_device_type_t;      /**< 设备类型 */
 typedef struct _cat_device_t            cat_device_t;           /**< 设备结构体 */
 
+
 #endif
 
 

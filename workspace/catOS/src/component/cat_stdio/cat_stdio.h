@@ -62,11 +62,14 @@
     #endif //#if( DEBUG_PRINT_ENABLE == 1)
 #endif //#if defined(__CC_ARM)
 
+/* PUBLIC FUNC DECL START */
+uint8_t cat_stdio_set_device(const uint8_t *name);
 
 uint8_t cat_getchar(void);
 uint8_t cat_putchar(uint8_t ch);
 int32_t cat_scanf(const uint8_t *format, ...);
 int32_t cat_printf(const uint8_t *format, ...);
+/* PUBLIC FUNC DECL END */
 
 
 #endif /* #if (CATOS_ENABLE_SYS_PRINTF == 1) */

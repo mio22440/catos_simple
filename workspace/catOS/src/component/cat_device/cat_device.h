@@ -1,3 +1,13 @@
+/**
+ * @file cat_device.h
+ * @author mio_wen (648137125@qq.com)
+ * @brief 设备驱动框架
+ * @version 0.1
+ * @date 2022-07-30
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #ifndef CAT_DEVICE_H
 #define CAT_DEVICE_H
 
@@ -78,8 +88,8 @@ struct _cat_device_t
     uint8_t (*init)   (cat_device_t*dev);
     uint8_t (*open)   (cat_device_t*dev, uint16_t oflag);
     uint8_t (*close)  (cat_device_t*dev);
-    uint8_t (*read)   (cat_device_t*dev, int32_t pos, void *buffer, uint32_t size);
-    uint8_t (*write)  (cat_device_t*dev, int32_t pos, const void *buffer, uint32_t size);
+    uint32_t (*read)   (cat_device_t*dev, int32_t pos, void *buffer, uint32_t size);
+    uint32_t (*write)  (cat_device_t*dev, int32_t pos, const void *buffer, uint32_t size);
     uint8_t (*ctrl)(cat_device_t*dev, int cmd, void *args);
 
     void                     *pri_data;            /**< 设备独有的数据 */
@@ -150,8 +160,8 @@ uint8_t cat_device_set_tx_cbk(cat_device_t *dev, uint8_t (*tx_cbk)(cat_device_t 
 uint8_t cat_device_init(cat_device_t *dev);
 uint8_t cat_device_open(cat_device_t *dev, uint16_t open_mode);
 uint8_t cat_device_close(cat_device_t *dev);
-uint8_t cat_device_read(cat_device_t *dev, int32_t pos, void *buffer, uint32_t size);
-uint8_t cat_device_write(cat_device_t *dev, int32_t pos, const void *buffer, uint32_t size);
+uint32_t cat_device_read(cat_device_t *dev, int32_t pos, void *buffer, uint32_t size);
+uint32_t cat_device_write(cat_device_t *dev, int32_t pos, const void *buffer, uint32_t size);
 uint8_t cat_device_ctrl(cat_device_t *dev, uint8_t cmd, void *arg);
 
 /* FUNCS END */

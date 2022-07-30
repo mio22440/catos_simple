@@ -1,9 +1,6 @@
 
 #include "catos.h"
 
-//#include "app.h"
-
-#include "cat_bsp_uart.h"
 #include "bsp_board_led.h"
 
 #include "key.h"
@@ -23,9 +20,6 @@ int do_test_device(void);
 
 void task1_entry(void *arg)
 {
-#if (CATOS_ENABLE_DEVICE_MODEL == 1)
-    do_test_device();
-#endif
     for(;;)
     {
       sched_task1_times++;
@@ -41,7 +35,7 @@ void task2_entry(void *arg)
     for(;;)
     {
         cat_sp_task_delay(100);
-        // CAT_DEBUG_PRINTF("[task2] %d\r\n", catos_systicks);
+        CAT_DEBUG_PRINTF("[task2] %d\r\n", catos_systicks);
     }
 }
 

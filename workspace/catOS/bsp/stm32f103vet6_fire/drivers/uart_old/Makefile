@@ -1,5 +1,5 @@
 
 
-obj-y += cat_drv_uart.o
+obj-y += cat_bsp_uart.o
 
 include $(RULE_DIR)/rules.mk

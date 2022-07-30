@@ -26,7 +26,7 @@
         {
             "name": "Cortex Debug",
             "cwd": "${workspaceRoot}",
-            "executable": "./workspace/output/simple_demo/bin/simple_demo.elf",
+            "executable": "./workspace/output/device/bin/device.elf",
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "openocd",
