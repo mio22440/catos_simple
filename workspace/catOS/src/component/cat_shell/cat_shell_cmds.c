@@ -1,3 +1,13 @@
+/**
+ * @file cat_shell_cmds.c
+ * @author mio_wen (648137125@qq.com)
+ * @brief 部分shell命令定义
+ * @version 0.1
+ * @date 2022-07-30
+ * 
+ * @copyright Copyright (c) 2022
+ * 
+ */
 #include "cat_shell.h"
 
 #if (CATOS_ENABLE_CAT_SHELL == 1)
@@ -80,7 +90,7 @@ void *do_help(void *arg)
         /* 只打印命令 */
         if(temp->type == CAT_CMD_TYPE_CMD)
         {
-            CAT_SYS_PRINTF("%2d %s\t%s\r\n", i, temp->content.cmd.name, temp->content.cmd.desc);
+            CAT_SYS_PRINTF("%2d %s\r\n", i, temp->content.cmd.name);
 		    i++;
         }
 	    

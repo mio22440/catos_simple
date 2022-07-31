@@ -1,11 +1,12 @@
 /**
  * @file cat_device.h
- * @author mio_wen (648137125@qq.com)
  * @brief 设备驱动框架
- * @version 0.1
+ * @author mio (648137125@qq.com)
+ * @version 1.0
  * @date 2022-07-30
- * 
- * @copyright Copyright (c) 2022
+ * Change Logs:
+ * Date           Author        Notes
+ * 2022-07-30     mio     first verion
  * 
  */
 #ifndef CAT_DEVICE_H

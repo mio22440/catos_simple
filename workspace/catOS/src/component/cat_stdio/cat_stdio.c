@@ -188,6 +188,15 @@ uint8_t cat_stdio_set_device(const uint8_t *name)
     _stdio_dev = cat_device_get(name);
     CAT_ASSERT(NULL != _stdio_dev);
 
+    if(NULL != _stdio_dev)
+    {
+        ret = cat_device_init(_stdio_dev);
+    }
+    if(CAT_EOK == ret)
+    {
+        ret = cat_device_open(_stdio_dev, CAT_DEVICE_MODE_RDWR);
+    }
+
     return ret;
 }
 

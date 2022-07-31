@@ -1,13 +1,15 @@
 /**
  * @file cat_device.c
- * @author mio_wen (648137125@qq.com)
  * @brief 设备驱动框架
- * @version 0.1
+ * @author mio (648137125@qq.com)
+ * @version 1.0
  * @date 2022-07-30
- * 
- * @copyright Copyright (c) 2022
+ * Change Logs:
+ * Date           Author        Notes
+ * 2022-07-30     mio     first verion
  * 
  */
+
 #include "cat_device.h"
 #include "cat_string.h"
 #include "cat_error.h"
@@ -452,5 +454,38 @@ uint8_t cat_device_ctrl(cat_device_t *dev, uint8_t cmd, void *arg)
     return ret;
 }
 /* PUBLIC FUNCS DEF END */
+
+#if (CATOS_ENABLE_CAT_SHELL == 1)
+#include "cat_shell.h"
+#include "cat_stdio.h"
+void *do_list_device(void *arg)
+{
+    (void)arg;
+
+    cat_device_t *dev = NULL;
+    cat_node_t *tmp = NULL;
+
+    CAT_KPRINTF("-->%d devices:\r\n", cat_list_count(&cat_device_list));
+
+    CAT_LIST_FOREACH(&cat_device_list, tmp)
+    {
+        dev = CAT_GET_CONTAINER(tmp, cat_device_t, link_node);
+        CAT_KPRINTF(
+            "id=%2d, name=%s, type=%d, state=%d, aval_mode=%d, open_mode=%d, ref_count=%d\r\n",
+            dev->device_id,
+            dev->device_name,
+            dev->type,
+            dev->state,
+            dev->aval_mode,
+            dev->open_mode,
+            dev->ref_count
+        );
+
+    }
+
+    return NULL;
+}
+CAT_DECLARE_CMD(list_device, list devices, do_list_device);
+#endif
 
 #endif

@@ -1,15 +1,13 @@
 /**
- * @file cat_bsp_uart.h
- * @brief 
- * @author amoigus (648137125@qq.com)
- * @version 0.1
- * @date 2021-06-05
+ * @file cat_drv_uart.h
+ * @brief uart串口驱动程序
+ * @author mio (648137125@qq.com)
+ * @version 1.0
+ * @date 2022-07-31
+ * Change Logs:
+ * Date           Author        Notes
+ * 2022-07-31     mio     first verion
  * 
- * @copyright Copyright (c) 2021
- * 
- * @par 修改日志：
- * Date              Version Author      Description
- * 2021-06-05 1.0    amoigus             目前只留一个调试用串口，之后再扩展
  */
 
 #include "catos_config.h"

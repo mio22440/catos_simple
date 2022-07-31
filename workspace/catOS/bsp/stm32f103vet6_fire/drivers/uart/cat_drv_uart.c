@@ -1,22 +1,23 @@
 /**
- * @file cat_bsp_uart.c
- * @brief 
- * @author amoigus (648137125@qq.com)
- * @version 0.1
- * @date 2021-06-05
+ * @file cat_drv_uart.c
+ * @brief uart串口驱动程序
+ * @author mio (648137125@qq.com)
+ * @version 1.0
+ * @date 2022-07-31
+ * Change Logs:
+ * Date           Author        Notes
+ * 2022-07-31     mio     first verion
  * 
- * @copyright Copyright (c) 2021
- * 
- * @par 修改日志：
- * Date              Version Author      Description
- * 2021-06-05 1.0    amoigus             内容
  */
 
 #include "cat_drv_uart.h"
-#include "stm32f1xx.h"
+#include "cat_device.h"
 #include "port.h"
 
-#include "cat_device.h"
+#include "stm32f1xx.h"
+
+
+
 
 struct _cat_stm32f103vet6_uart_config_t
 {
@@ -175,6 +176,7 @@ uint8_t cat_drv_uart_register(void)
             uart1_cfg_data.aval_mode
             );
 
+#if 0
     if(CAT_EOK == err)
     {
         err = cat_device_init(&uart1_dev);
@@ -183,19 +185,11 @@ uint8_t cat_drv_uart_register(void)
     {
         err = cat_device_open(&uart1_dev, CAT_DEVICE_MODE_RDWR);
     }
+#endif
 
     if(CAT_EOK != err)
     {
         while(1);
-    }
-    else
-    {
-        cat_device_write(
-            &uart1_dev,
-            0,
-            "uart1\r\n",
-            8
-        );
     }
 
     return err;
