@@ -43,7 +43,7 @@ void cat_sp_task_create(
     void (*entry)(void *), 
     void *arg, 
     uint8_t prio, 
-    cat_stack_type_t *stack_start_addr,
+    void *stack_start_addr,
     uint32_t stack_size
 );
 

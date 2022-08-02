@@ -10,8 +10,8 @@ struct _cat_task_t task1;
 struct _cat_task_t task2;
 
 
-cat_stack_type_t task1_env[1024];
-cat_stack_type_t task2_env[1024];
+uint32_t task1_env[1024];
+uint32_t task2_env[1024];
 
 uint32_t sched_task1_times = 0;
 uint32_t sched_task2_times = 0;

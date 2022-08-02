@@ -208,9 +208,9 @@ uint8_t cat_device_register(cat_device_t *dev, const uint8_t *name, uint16_t ava
             // dev->pri_data    = NULL;    /* 私有数据由相应的设备自行设置 */
 
             /* 将设备挂到设备链表中 */
-            uint32_t status = cat_enter_critical();
+            uint32_t status = cat_hw_irq_disable();
             cat_list_add_last(&cat_device_list, &dev->link_node);
-            cat_exit_critical(status);
+            cat_hw_irq_enable(status);
 
         }/* if(NULL != cat_device_get(name)) */
     }/* if(NULL == dev) */
@@ -236,9 +236,9 @@ uint8_t cat_device_unregister(cat_device_t *dev)
     {
         ret = _cat_device_free_id(dev->device_id);
 
-        uint32_t status = cat_enter_critical();
+        uint32_t status = cat_hw_irq_disable();
         cat_list_remove_node(&cat_device_list, &(dev->link_node));
-        cat_exit_critical(status);
+        cat_hw_irq_enable(status);
     }
 
     return ret;

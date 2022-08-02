@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 
+/************** MACROS*********************/
 #define U32_MAX_VAL 0xffffffff
 
 typedef signed char     int8_t;
@@ -37,12 +38,22 @@ typedef unsigned short int      uint16_t;
     typedef unsigned int            uint32_t;
 #endif
 
-typedef uint32_t cat_stack_type_t;       //stack type(the default stack wide of stm32 is 32)
-
 /* 错误代码定义 */
 #define CAT_EOK                 (0)     /**< 成功 */
 #define CAT_ERROR               (1)     /**< 失败 */
 #define CAT_EINVAL              (2)     /**< 非法值 */
+
+/* 对齐 */
+/**
+ * @brief 向上取整对齐
+ */
+#define CAT_ALIGN(addr, align) \
+    (((addr) + (align) - 1) & ~((align) - 1))
+/**
+ * @brief 向下取整对齐
+ */
+#define CAT_ALIGN_DOWN(addr, align) \
+    ((addr) & ~((align) - 1))
 
 /************** struct type*********************/
 /* cat_list.c */

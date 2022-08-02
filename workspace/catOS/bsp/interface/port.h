@@ -25,7 +25,7 @@
 /**
  * @brief 硬件初始化
  */
-void cat_port_hardware_init(void);
+void cat_hw_init(void);
 
 /**
  * @brief 开始调度
@@ -37,21 +37,31 @@ void catos_start_sched(void);
  * @brief 上下文切换
  * 
  */
-void cat_context_switch(void);
+void cat_hw_context_switch(void);
 
 /**
  * @brief 关中断进临界区
  * 
  * @return uint32_t 
  */
-uint32_t cat_enter_critical(void);
+uint32_t cat_hw_irq_disable(void);
 
 /**
  * @brief 开中断出临界区
  * 
  * @param status 
  */
-void cat_exit_critical(uint32_t status);
+void cat_hw_irq_enable(uint32_t status);
 
+/**
+ * @brief 栈初始化
+ * 
+ * @param task_entry    任务入口函数地址
+ * @param parameter     参数
+ * @param stack_addr    栈起始地址
+ * @param exit          任务退出函数地址
+ * @return uint8_t*     初始化后的栈顶地址
+ */
+uint8_t *cat_hw_stack_init(void *task_entry, void *parameter, uint8_t *stack_addr, void *exit);
 
 #endif

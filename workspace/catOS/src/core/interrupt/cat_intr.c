@@ -34,12 +34,12 @@ void cat_systick_init(void)
  */
 void cat_intr_systemtick_handler(void)
 {
-    uint32_t status = cat_enter_critical();
+    uint32_t status = cat_hw_irq_disable();
     /* 处理等待的任务 */
     cat_sp_task_delay_deal();
     /* 系统tick数 */
     catos_systicks++;
-    cat_exit_critical(status);
+    cat_hw_irq_enable(status);
 	
     /* 进行一次调度 */
     cat_sp_task_sched();

@@ -66,7 +66,7 @@ void cat_sp_task_create(
     void (*entry)(void *), 
     void *arg, 
     uint8_t prio, 
-    cat_stack_type_t *stack_start_addr,
+    void *stack_start_addr,
     uint32_t stack_size
 )
 {
@@ -169,12 +169,12 @@ void cat_sp_task_delay_deal(void)
 void cat_sp_task_sched(void)
 {
     struct _cat_task_t *temp_task;
-    uint32_t status = cat_enter_critical();
+    uint32_t status = cat_hw_irq_disable();
 
     /* 如果调度被上锁就直接返回，不调度 */
     if(sched_lock_cnt > 0)
     {
-        cat_exit_critical(status);
+        cat_hw_irq_enable(status);
         return;
     }
 
@@ -186,10 +186,10 @@ void cat_sp_task_sched(void)
         /* 增加调度次数信息 */
         cat_sp_next_task->sched_times++;
 
-        cat_context_switch();
+        cat_hw_context_switch();
     }
 
-    cat_exit_critical(status);
+    cat_hw_irq_enable(status);
 }
 
 /**
@@ -198,7 +198,7 @@ void cat_sp_task_sched(void)
  */
 void cat_sp_task_sched_enable(void)
 {
-    uint32_t status = cat_enter_critical();
+    uint32_t status = cat_hw_irq_disable();
     if(sched_lock_cnt > 0)
     {
         if(--sched_lock_cnt == 0)
@@ -207,7 +207,7 @@ void cat_sp_task_sched_enable(void)
         }
     }
 
-    cat_exit_critical(status);
+    cat_hw_irq_enable(status);
 }
 
 /**
@@ -216,12 +216,12 @@ void cat_sp_task_sched_enable(void)
  */
 void cat_sp_task_sched_enable_without_sched(void)
 {
-    uint32_t status = cat_enter_critical();
+    uint32_t status = cat_hw_irq_disable();
     if(sched_lock_cnt > 0)
     {
         --sched_lock_cnt;
     }
-    cat_exit_critical(status);
+    cat_hw_irq_enable(status);
 }
 
 /**
@@ -230,13 +230,13 @@ void cat_sp_task_sched_enable_without_sched(void)
  */
 void cat_sp_task_sched_disable(void)
 {
-    uint32_t status = cat_enter_critical();
+    uint32_t status = cat_hw_irq_disable();
     if(sched_lock_cnt < 255)
     {
         sched_lock_cnt++;
     }
 
-    cat_exit_critical(status);
+    cat_hw_irq_enable(status);
 }
 
 /**
@@ -271,7 +271,7 @@ void cat_sp_task_unrdy(struct _cat_task_t *task)
  */
 void cat_sp_task_delay(uint32_t ticks)
 {
-    uint32_t status = cat_enter_critical(); 
+    uint32_t status = cat_hw_irq_disable(); 
 
     /* 要等待的tick数 */
     cat_sp_cur_task->delay = ticks;
@@ -282,7 +282,7 @@ void cat_sp_task_delay(uint32_t ticks)
     /* 置位等待状态 */
     cat_sp_cur_task->state |= CATOS_TASK_STATE_DELAYED;
 
-    cat_exit_critical(status);
+    cat_hw_irq_enable(status);
 
     /* 进行一次调度 */
     cat_sp_task_sched();
@@ -311,7 +311,7 @@ void cat_sp_task_delay_wakeup(struct _cat_task_t *task)
  */
 void cat_sp_task_suspend(struct _cat_task_t *task)
 {
-    uint32_t status = cat_enter_critical();
+    uint32_t status = cat_hw_irq_disable();
 
     /* 只有不在延时状态时可以被挂起 */
     if(!(task->state & CATOS_TASK_STATE_DELAYED))
@@ -329,7 +329,7 @@ void cat_sp_task_suspend(struct _cat_task_t *task)
         }
     }
 
-    cat_exit_critical(status);
+    cat_hw_irq_enable(status);
 }
 
 /**
@@ -339,7 +339,7 @@ void cat_sp_task_suspend(struct _cat_task_t *task)
  */
 void cat_sp_task_suspend_wakeup(struct _cat_task_t *task)
 {
-    uint32_t status = cat_enter_critical();
+    uint32_t status = cat_hw_irq_disable();
 
     /* 只有已经被挂起至少一次的任务才能被唤醒 */
     if(task->state & CATOS_TASK_STATE_SUSPEND)
@@ -352,5 +352,5 @@ void cat_sp_task_suspend_wakeup(struct _cat_task_t *task)
         }
     }
 
-    cat_exit_critical(status);
+    cat_hw_irq_enable(status);
 }

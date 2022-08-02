@@ -33,12 +33,18 @@
 /* 任务控制块 */
 struct _cat_task_t
 {
-    cat_stack_type_t    *stack_top;                     /**< 栈顶(堆栈指针)*/
-    uint32_t            *stack_start_addr;              /**< 堆栈起始地址*/
+    void               *sp;                             /**< 栈顶(堆栈指针)*/
+    uint8_t            *task_name;                      /**< 任务名称*/
+    uint8_t             sched_strategy;                 /**< 调度策略 */
+
+
+    void               *entry;                          /**< 入口函数 */
+    void               *arg;                            /**< 入口函数的参数 */
+    void               *stack_start_addr;               /**< 堆栈起始地址*/
     uint32_t            stack_size;                     /**< 堆栈大小*/
 
     struct _cat_node_t  link_node;                      /**< 任务表中的链表节点，也用于delay链表*/
-    uint32_t            delay;                     /**< soft delay timer(number of systemticks)*/
+    uint32_t            delay;                          /**< 延时剩余tick数*/
 
     uint32_t            state;                          /**< 当前状态*/
 
@@ -46,10 +52,9 @@ struct _cat_task_t
     uint32_t            slice;                          /**< 时间片(剩余时间)*/
     uint32_t            suspend_cnt;                    /**< 被挂起的次数*/
 
-    uint8_t             *task_name;                     /**< 任务名称*/
     uint32_t            sched_times;                    /**< 调度次数*/
 
-    uint8_t             sched_strategy;                 /**< 调度策略 */
+    
 
 };
 
@@ -73,7 +78,7 @@ void cat_task_init(
     void (*entry)(void *), 
     void *arg, 
     uint8_t prio, 
-    cat_stack_type_t *stack_start_addr,
+    void *stack_start_addr,
     uint32_t stack_size,
     uint32_t sched_strategy
 );

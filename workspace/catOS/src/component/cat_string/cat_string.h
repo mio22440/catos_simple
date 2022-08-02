@@ -69,6 +69,16 @@ int32_t cat_htoi(uint32_t *dest, const uint8_t *src);
  */
 int32_t cat_itoh(uint8_t *dest, uint32_t src);
 
+/**
+ * @brief 格式化内存块
+ * 
+ * @param start_addr    内存块起始地址
+ * @param fill_with     填充的字符
+ * @param size          内存块大小
+ * @return void* 
+ */
+void *cat_memset(void *start_addr, uint8_t fill_with, uint32_t size);
+
 
 
 #endif

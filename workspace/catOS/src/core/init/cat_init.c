@@ -32,7 +32,7 @@ extern void main(void);
 void catos_init(void)
 {
     /* 板级硬件初始化 */
-    cat_port_hardware_init();
+    cat_hw_init();
 
     /* 初始化设备框架 */
     cat_device_module_init();
@@ -55,7 +55,7 @@ void catos_init(void)
     /* 创建shell任务 */
     cat_shell_task_create();
 
-    /* 禁止调度，若用户调用catos_start_sched()，则在其中打开调度锁 */
+    /* 禁止调度，若用户调用catos_hw_start_sched()，则在其中打开调度锁 */
     cat_sp_task_sched_disable();
 
     /* 跳转到用户主函数 */

@@ -15,35 +15,35 @@
     .equ NVIC_PENDSV_PRI, 0x000000FF
 
 /**
- * uint32_t cat_enter_critical(void)
+ * uint32_t cat_hw_irq_disable(void)
  * 关中断方式进入临界区
  * primask-->r0
  */
-    .global cat_enter_critical
-    .type cat_enter_critical, %function
-cat_enter_critical:
+    .global cat_hw_irq_disable
+    .type cat_hw_irq_disable, %function
+cat_hw_irq_disable:
     mrs r0, primask             /* ret = primask */
     cpsid I                     /* disable irq */
     bx lr                       /* return ret */
 
 /**
- * void cat_exit_critical(uint32_t status)
+ * void cat_hw_irq_enable(uint32_t status)
  * 开中断方式出临界区
  * r0-->status
  */
-    .global cat_exit_critical
-    .type cat_exit_critical, %function
-cat_exit_critical:
+    .global cat_hw_irq_enable
+    .type cat_hw_irq_enable, %function
+cat_hw_irq_enable:
     msr primask, r0             /* primask = status */
     bx lr                       
     
 /**
- * void cat_context_switch(void)
+ * void cat_hw_context_switch(void)
  * 触发pendsv中断进行任务切换(pendsv的优先级在开始第一个任务时已经设置)
  */
-    .global cat_context_switch
-    .type cat_context_switch, %function
-cat_context_switch:
+    .global cat_hw_context_switch
+    .type cat_hw_context_switch, %function
+cat_hw_context_switch:
     ldr r0, =NVIC_INT_CTRL      
     ldr r1, =NVIC_PENDSVSET
     str r1, [r0]                /* *(NVIC_INT_CTRL) = NVIC_PENDSVSET */
