@@ -206,13 +206,18 @@ int32_t cat_htoi(uint32_t *dest, const uint8_t *src)
  * @param dest 
  * @param src 
  * @return int32_t 
+ * 
+ * note: 先从低位到高位计算出字符串，再反转除 "0x" 的字符串
  */
 int32_t cat_itoh(uint8_t *dest, uint32_t src)
 {
     CAT_ASSERT(dest);
 
     int32_t ret = CAT_EOK;
-    uint32_t temp = 0;
+    uint8_t temp = 0;
+    uint8_t *start;
+
+    start = dest + 2;   /* 16进制的起始位置 */
 
     *(dest++) = '0';
     *(dest++) = 'x';
@@ -233,7 +238,17 @@ int32_t cat_itoh(uint8_t *dest, uint32_t src)
         dest++;
     }
 
-    *dest = '\0';
+    *(dest--) = '\0';   /* 这之后要反转字符串，所以避开 "\0" */
+
+    while(start < dest)
+    {
+        temp   = *start;
+        *start = *dest;
+        *dest  = temp;
+
+        start++;
+        dest--;
+    }
 
     return ret;
 }

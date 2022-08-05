@@ -20,6 +20,7 @@ int do_test_device(void);
 
 void task1_entry(void *arg)
 {
+
     for(;;)
     {
         sched_task1_times++;
