@@ -128,6 +128,7 @@ LoopFillZerobss:
 */
     .section .text.Default_Handler,"ax",%progbits
 Default_Handler:
+  mrs r0, ipsr
   b cat_intr_default_handler
 @ Infinite_Loop:
 @   b Infinite_Loop

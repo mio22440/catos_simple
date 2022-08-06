@@ -44,7 +44,7 @@ void task2_entry(void *arg)
 
 int main(void)
 {
-	  board_led_init();
+	board_led_init();
     EXTI_Key_Config();
 
 #if 1

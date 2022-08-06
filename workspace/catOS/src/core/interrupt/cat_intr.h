@@ -33,6 +33,6 @@ void cat_intr_systemtick_handler(void);
  * @brief 默认中断服务函数
  * 
  */
-void cat_intr_default_handler(void);
+void cat_intr_default_handler(uint32_t ipsr_val);
 
 #endif
