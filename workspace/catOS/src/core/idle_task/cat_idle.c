@@ -20,7 +20,7 @@
 struct _cat_task_t *cat_idle_task;                      /**< 空闲任务全局指针 */
 static struct _cat_task_t idle_task;                    /**< 空闲任务变量 */
 
-uint32_t idle_task_env[CATOS_IDLE_STACK_SIZE];  /**< 空闲任务堆栈 */
+cat_task_stack_unit_t idle_task_env[CATOS_IDLE_STACK_SIZE];  /**< 空闲任务堆栈 */
 
 uint32_t idle_cnt;                                      /**< 空闲任务时钟节拍计数*/
 uint32_t idle_max_cnt;                                  /**< 最大节拍输(现在是一秒内的)*/
@@ -48,7 +48,7 @@ void cat_idle_entry(void *arg)
 
     for(;;)
     {
-
+        
     }
 }
 

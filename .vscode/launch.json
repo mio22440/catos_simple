@@ -8,7 +8,7 @@
         "name": "(gdb) Launch",
         "type": "cppdbg",
         "request": "launch",
-        "program": "${workspaceFolder}/src/output/stm32f103vet6/bin/stm32f103vet6.elf",
+        "program": "${workspaceFolder}/workspace/output/linux_emu/bin/linux_emu.elf",
         "args": [],
         "stopAtEntry": true,
         "cwd": "${fileDirname}",
@@ -26,7 +26,8 @@
         {
             "name": "Cortex Debug",
             "cwd": "${workspaceRoot}",
-            "executable": "./workspace/output/device/bin/device.elf",
+            //"executable": "./workspace/output/device/bin/device.elf",
+            "executable": "./workspace/output/c8t6/bin/c8t6.elf",
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "openocd",

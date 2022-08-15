@@ -1,13 +1,12 @@
-
-ifeq ($(CATOS_BOARD_STM32F103VET6_FIRE), y)
-# CINCLUDE_FILE += Libraries/CMSIS/Include
-# CINCLUDE_FILE += Libraries/CMSIS/Device/ST/STM32F1xx/Include
-# CINCLUDE_FILE += Libraries/STM32F1xx_HAL_Driver/Inc
-
+### BSP 相关 START
 CINCLUDE_FILE += catOS/bsp/interface
+ifeq ($(CATOS_BOARD_STM32F103VET6_FIRE), y)
 CINCLUDE_FILE += catOS/bsp/stm32f103vet6_fire/drivers
 endif
-
+ifeq ($(CATOS_BOARD_LINUX), y)
+CINCLUDE_FILE += catOS/bsp/linux/drivers
+endif
+### BSP 相关 END
 
 CINCLUDE_FILE += catOS/include
 

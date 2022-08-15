@@ -1,20 +1,21 @@
 
 #include "catos.h"
+#ifdef CATOS_BOARD_IS_STM32F103VET6_FIRE
+    #include "bsp_board_led.h"
+    #include "key.h"
+#endif /* #ifdef CATOS_BOARD_IS_STM32F103VET6_FIRE */
 
-#include "bsp_board_led.h"
-
-#include "key.h"
-
+#define TASK1_STACK_SIZE 512
 
 struct _cat_task_t task1;
-struct _cat_task_t task2;
+// struct _cat_task_t task2;
 
 
-uint32_t task1_env[1024];
-uint32_t task2_env[1024];
+cat_task_stack_unit_t task1_env[TASK1_STACK_SIZE];
+// uint32_t task2_env[1024];
 
 uint32_t sched_task1_times = 0;
-uint32_t sched_task2_times = 0;
+// uint32_t sched_task2_times = 0;
 
 int do_test_device(void);
 
@@ -24,9 +25,14 @@ void task1_entry(void *arg)
     for(;;)
     {
         sched_task1_times++;
+        //printf("task1\n");
+#ifdef CATOS_BOARD_IS_STM32F103VET6_FIRE
 	    board_led_on();
+#endif /* #ifdef CATOS_BOARD_IS_STM32F103VET6_FIRE */
         cat_sp_task_delay(100);
+#ifdef CATOS_BOARD_IS_STM32F103VET6_FIRE
 		board_led_off();
+#endif /* #ifdef CATOS_BOARD_IS_STM32F103VET6_FIRE */
         cat_sp_task_delay(100);
     }
 }
@@ -44,9 +50,14 @@ void task2_entry(void *arg)
 
 int main(void)
 {
+#ifdef CATOS_BOARD_IS_STM32F103VET6_FIRE
 	board_led_init();
-    EXTI_Key_Config();
+    // EXTI_Key_Config();
+#endif /* #ifdef CATOS_BOARD_IS_STM32F103VET6_FIRE */
 
+#ifdef CATOS_BOARD_IS_LINUX
+    cat_linux_pre_init();
+#endif /* #ifdef CATOS_BOARD_IS_LINUX */
 #if 1
     /* 测试创建任务运行 */
     cat_sp_task_create(
@@ -56,18 +67,18 @@ int main(void)
       NULL,
       0,
       task1_env,
-      sizeof(task1_env)
+      TASK1_STACK_SIZE
     );
 
-    cat_sp_task_create(
-      (const uint8_t *)"task2_task",
-      &task2,
-      task2_entry,
-      NULL,
-      0,
-      task2_env,
-      sizeof(task2_env)
-    );
+    // cat_sp_task_create(
+    //   (const uint8_t *)"task2_task",
+    //   &task2,
+    //   task2_entry,
+    //   NULL,
+    //   0,
+    //   task2_env,
+    //   sizeof(task2_env)
+    // );
 
     catos_start_sched();
 #else

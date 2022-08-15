@@ -240,7 +240,7 @@ type \"help\" to get more info\r\n\r\n"
 /* 声明shell中输入字符时处理的按键 */
 #define CAT_DECLARE_KEY(_name, _value, _action) \
     const cat_shell_cmd_t \
-    cat_cmd_##_name SECTION("cat_shell_cmd") =  \
+    cat_key_##_name SECTION("cat_shell_cmd") =  \
     { \
         .type = CAT_CMD_TYPE_KEY, \
         .content.key.name = (const uint8_t *)#_name, \
@@ -249,11 +249,17 @@ type \"help\" to get more info\r\n\r\n"
     }
 
 /* 遍历命令列表 */
+#ifndef CATOS_BOARD_IS_LINUX
 #define CAT_FOREACH_CMD(_temp) \
     for(_temp =  (cat_shell_cmd_t*)SECTION_START(cat_shell_cmd); \
         _temp != (cat_shell_cmd_t*)SECTION_END(cat_shell_cmd); \
         _temp ++)
-
+#else /* #ifndef CATOS_BOARD_IS_LINUX */
+#define CAT_FOREACH_CMD(_temp) \
+    for(_temp =  (cat_shell_cmd_t*)SECTION_START(cat_shell_cmd); \
+        _temp <= (cat_shell_cmd_t*)SECTION_END(cat_shell_cmd); \
+        _temp += 0x40)
+#endif /* #ifndef CATOS_BOARD_IS_LINUX */
 #else //CAT_USE_SECTION
 
 

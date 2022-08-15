@@ -264,18 +264,18 @@ int32_t cat_itoh(uint8_t *dest, uint32_t src)
 void *cat_memset(void *start_addr, uint8_t fill_with, uint32_t size)
 {
 /* 最大块长度(与架构位数有关) */
-#define LONG_BLK_SZ     (sizeof(uint32_t))
+#define LONG_BLK_SZ     (sizeof(cat_ubase_t))
 /* 未对齐(目标地址低于最大块长度的位有非零位) */
-#define UNALIGNED(_addr)    ((uint32_t)_addr & (LONG_BLK_SZ - 1))
+#define UNALIGNED(_addr)    ((cat_ubase_t)_addr & (LONG_BLK_SZ - 1))
 /* 内存块太小 */
 #define TOO_SMALL(_size)    ((_size) < LONG_BLK_SZ)
 
     /**< 对齐的地址 */
-    uint32_t *aligned_addr;     
+    cat_ubase_t *aligned_addr;     
     /**< 没对齐或者碎片地址 */
     uint8_t *piece_addr = (uint8_t *)start_addr;   
-    /**< 4字节填充缓冲 */    
-    uint32_t word_fill_buff;    
+    /**< n字节填充缓冲(根据目标cpu位数) */    
+    cat_ubase_t word_fill_buff;    
 
     if(
         !(TOO_SMALL(size)) &&
@@ -292,11 +292,16 @@ void *cat_memset(void *start_addr, uint8_t fill_with, uint32_t size)
         }
         else
         {
-            /* 目前只支持32位 */
-            CAT_ASSERT(LONG_BLK_SZ == 4);
+            int i;
+            /* 64位 */
+            word_fill_buff = 0;
+            for(i = 0; i < LONG_BLK_SZ; i++)
+            {
+                word_fill_buff = (word_fill_buff << 8) | fill_with;
+            }
         }
 
-        /* 16字节填充 */
+        /* 4n字节填充 */
         while(size >= (LONG_BLK_SZ << 2))
         {
             *aligned_addr++ = word_fill_buff;
@@ -305,7 +310,7 @@ void *cat_memset(void *start_addr, uint8_t fill_with, uint32_t size)
             *aligned_addr++ = word_fill_buff;
             size -= (LONG_BLK_SZ << 2);
         }
-        /* 4字节填充 */
+        /* n字节填充 */
         while(size >= LONG_BLK_SZ)
         {
             *aligned_addr++ = word_fill_buff;

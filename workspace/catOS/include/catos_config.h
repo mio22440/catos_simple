@@ -25,7 +25,7 @@
 #define CATOS_MAX_TASK_PRIO         (32)    /**< 任务最大优先级 */
 #define CATOS_MAX_SLICE             (10)    /**< 最大时间片 */
 
-#define CATOS_IDLE_STACK_SIZE       (1024)  /**< 空闲任务栈大小*/
+#define CATOS_IDLE_STACK_SIZE       (256)  /**< 空闲任务栈大小*/
 
 /** component **/
 /* cat_device */
@@ -37,5 +37,12 @@
 #if (CATOS_ENABLE_SYS_PRINTF == 1)
     #define CATOS_ENABLE_DEBUG_PRINTF       1     /**< 调试打印功能 */
 #endif /* #if (CATOS_ENABLE_SYS_PRINTF == 1) */
+
+/** core **/
+/* cat_basic_task */
+#define CATOS_TASK_ENABLE_STAT              1     /**< 使能任务信息查看 */
+#if (CATOS_TASK_ENABLE_STAT == 1)
+    #define CATOS_TASK_STAT_MAX_TASK        (20)     /**< 最大统计任务数量 */
+#endif
 
 #endif/* #ifndef CATOS_CONFIG_H */

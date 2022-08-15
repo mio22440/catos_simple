@@ -60,6 +60,8 @@ void cat_intr_default_handler(uint32_t ipsr_val)
     /* 减去不可编程的向量数得到向量号 */
     uint32_t vector = ipsr_val - 16;
 
+    (void)vector;
+
     while(1);
 }
 

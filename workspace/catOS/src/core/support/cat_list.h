@@ -29,7 +29,7 @@
  */
 /*< 获取指针的拥有者的结构体首地址**/
 #define CAT_GET_CONTAINER(ptr, container, member) \
-    ((container *)((uint32_t)ptr - (uint32_t)&((container *)0)->member))
+    ((container *)((cat_ubase_t)ptr - (cat_ubase_t)&((container *)0)->member))
 
 /*< 获取链表节点的拥有者的结构体首地址**/
 #define CAT_LIST_ENTRY(node, parent, member) \

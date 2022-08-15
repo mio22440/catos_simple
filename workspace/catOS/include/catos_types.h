@@ -22,21 +22,16 @@
 
 typedef signed char     int8_t;
 typedef short int       int16_t;
-
-#if defined(__CC_ARM)
+#ifndef int32_t
     typedef int             int32_t;
 #endif
-
 typedef unsigned char           uint8_t;
 typedef unsigned short int      uint16_t;
-
-#if 1
-    #if defined(__CC_ARM)
-        typedef unsigned int            uint32_t;
-    #endif
-#else
+#ifndef uint32_t
     typedef unsigned int            uint32_t;
 #endif
+
+typedef unsigned long               cat_ubase_t;
 
 /* 错误代码定义 */
 #define CAT_EOK                 (0)     /**< 成功 */
@@ -54,6 +49,9 @@ typedef unsigned short int      uint16_t;
  */
 #define CAT_ALIGN_DOWN(addr, align) \
     ((addr) & ~((align) - 1))
+
+/************** var type*********************/
+typedef uint8_t cat_task_stack_unit_t;
 
 /************** struct type*********************/
 /* cat_list.c */

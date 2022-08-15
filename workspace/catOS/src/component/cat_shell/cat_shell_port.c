@@ -20,7 +20,7 @@
 
 #if (CATOS_ENABLE_CAT_SHELL == 1)
 struct _cat_task_t shell_task;
-uint32_t shell_task_env[CATOS_SHELL_STACK_SIZE];
+cat_task_stack_unit_t shell_task_env[CATOS_SHELL_STACK_SIZE];
 
 cat_shell_instance_t port_shell_inst_1 = {0};
 cat_shell_config_t shell_cfg = {0};
